@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>target-list</title>
+    <link rel="stylesheet" href="../css/target-list.css">
+</head>
+<body>
+    <div id="content" class="content">
+        <!-- 头部 开始 -->
+        <div class="title">
+            <h3>MY-目标列表</h3>
+        </div>
+        <!-- 头部 结束 -->
+        <!-- 添加目标 开始 -->
+        <div class="add-list-area">
+            <label>添加目标:</label>
+            <input type="text" name="" v-model="targetName" @keyup.enter="addTarget" placeholder="请输入要添加的目标">
+            <span class="add-btn" v-on:click="addTarget">添加</span>
+        </div>
+        <!-- 添加目标 结束 -->
+        <!-- 目标内容 开始 -->
+        <div class="target-content">
+            <!-- 列表信息 开始 -->
+            <div class="list-info">
+                <span>共有</span>
+                <span class="all">{{all}}</span>
+                <span>个目标,已完成</span>
+                <span class="completed">{{completed}}</span>
+                <span>个,还剩</span>
+                <span class="unfinish">{{unfinished}}</span>
+                <span>个未完成</span>
+            </div>
+            <!-- 列表信息 结束 -->
+            <!-- 导航 开始 -->
+            <div class="title-warp">
+                <span v-bind:class="{selectd: allIsSelect}" v-on:click="allTargetFun">所有目标</span>
+                <span v-bind:class="{selectd: comIsSelect}" v-on:click="completedFun">已完成目标</span>
+                <span v-bind:class="{selectd: unIsSelect}" v-on:click="unfinishFun">未完成目标</span>
+            </div>
+            <!-- 导航 结束 -->
+            <!-- 列表详情 开始 -->
+            <div class="list-details">
+                <table>
+                    <!-- 表头 开始 -->
+                    <thead>
+                        <tr>
+                            <td>目标ID</td>
+                            <td>目标名称</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <!-- 表头 结束 -->
+                    <!-- 列表内容 开始 -->
+                    <tbody>
+                        <tr v-for="(item,index) in target(targetList)">
+                            <td class="number" :data-id="index">{{index}}</td>
+                            <td>
+                                <span class="btn-checkbox select" v-if="item.status" v-on:click="chexkBoxFun(item)"></span>
+                                <span class="btn-checkbox" v-on:click="chexkBoxFun(item)" v-else></span>{{item.name}}
+                            </td>
+                            <td>
+                                <span class="btn-del" v-on:click="delTargetFun(item)">删除</span>
+                                <span class="btn-ensure" v-on:click="editFun(item)" v-if="item.isEdit">确定</span>
+                                <span class="btn-edit" v-on:click="editFun(item)" v-else>编辑</span>
+                                <input type="text" v-if="item.isEdit" v-model="item.name">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <!-- 列表内容 结束 -->
+                </table>
+            </div>
+            <!-- 列表详情 结束 -->
+        </div>
+        <!-- 目标内容 结束 -->
+    </div>
+    <script src="../../lib/vue.js"></script>
+    <script src="../js/index.js"></script>
+</body>
+</html>
